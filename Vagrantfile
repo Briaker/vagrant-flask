@@ -2,8 +2,6 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-    # Fixes 'stdin is not a tty' error
-    # config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
     config.vm.box = "ubuntu-trusty-64"
     config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
@@ -17,14 +15,18 @@ Vagrant.configure(2) do |config|
         v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
         v.customize ["modifyvm", :id, "--nictype1", "virtio"]
-        v.name = "testappbalh"
+        v.name = "myApp"
         v.memory = 4096
         v.cpus = 4
         v.gui = false
     end
 
     config.vm.provision "shell" do |s|
-       s.path = "www/provision/setup-dev.sh"
-       s.args = "'/var/www' 'brianbaker'"
+       s.path = "www/provision/setup.sh"
+
+       # Required arguments:
+       #    arg1: root dir in the guest machine
+       #    arg2: the name of your app
+       s.args = "'/var/www' 'myApp'"
     end
 end
