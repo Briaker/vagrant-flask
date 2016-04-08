@@ -17,3 +17,7 @@ Sass
 Open VagratnFile and under config.vm.provision change arg2 to your apps' name.
 
 Everytime the provision script is run and an existsing directory with the same app name is found, a backup of the app folder will be made (env and the ini/config files in the root dir will be deleted)
+
+Use command: vagrant up in the VagrantFile directory to start server
+
+Then goto http://localhost:8888/ on the host machine
