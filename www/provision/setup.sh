@@ -223,18 +223,13 @@ echo "Configuring Web Server..."
     
     # Emperor setup
 
-    # Setting up service
+    # UpStart service
     cpEdit "$APP_PROVISION/server" "/etc/init" "emperor.conf"
-
+    
     if [ ! -d $UWSGI_ETC_PATH/vassals ];
     then
         sudo mkdir -p $UWSGI_ETC_PATH/vassals
     fi
-
-    # Create socket file
-    touch $UWSGI_RUN_PATH/$APP_NAME.sock
-    # Set permissions
-    sudo chown www-data $UWSGI_RUN_PATH/$APP_NAME.sock
     
     # End of Emperor setup
 
