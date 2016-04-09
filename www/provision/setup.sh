@@ -153,7 +153,7 @@ echo "Installing Flask..."
     pip install -r $APP_PROVISION/requirements.txt
 
     # Copy boilerplate
-    cp "$APP_PROVISION/resources/boilerplates/flask-mvc" $APP_ROOT/$APP_NAME
+    cp -a "$APP_PROVISION/resources/boilerplates/flask-mvc/." $APP_ROOT/$APP_NAME
 
     deactivate
 } &> /dev/null
@@ -224,21 +224,20 @@ echo "Configuring Web Server..."
     # Emperor setup
 
     # Setting up service
-    cpEdit "$APP_PROVISION/server" "$APP_ROOT" "emperor.conf"
-
-    ensureSymlink $APP_ROOT/emperor.conf /etc/init/emperor.conf
+    cpEdit "$APP_PROVISION/server" "/etc/init" "emperor.conf"
 
     if [ ! -d $UWSGI_ETC_PATH/vassals ];
     then
         sudo mkdir -p $UWSGI_ETC_PATH/vassals
     fi
 
-    # End of Emperor setup
-
     # Create socket file
     touch $UWSGI_RUN_PATH/$APP_NAME.sock
     # Set permissions
     sudo chown www-data $UWSGI_RUN_PATH/$APP_NAME.sock
+    
+    # End of Emperor setup
+
 
     # Enable App
     ensureSymlink $APP_ROOT/uwsgi.ini $UWSGI_ETC_PATH/vassals/uwsgi.ini
