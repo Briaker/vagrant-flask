@@ -248,6 +248,13 @@ echo "Configuring Web Server..."
 
     # Restart nginx service
     sudo service nginx stop
+
+    # Remove init.d service
+    sudo update-rc.d -f nginx remove
+
+    # Add upstart service
+    sudo cp $APP_PROVISION/server/upstart/nginx.conf /etc/init/
+
     sudo service nginx start
 
     # Restart emperor service
