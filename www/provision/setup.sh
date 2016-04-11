@@ -255,6 +255,9 @@ echo "Configuring Web Server..."
     # Add upstart service
     sudo cp $APP_PROVISION/server/upstart/nginx.conf /etc/init/
 
+    # Workaround for Vagrant enviroment, restarts nginx service after mount
+    sudo cp $APP_PROVISION/server/upstart/vvv.conf /etc/init/
+
     sudo service nginx start
 
     # Restart emperor service
