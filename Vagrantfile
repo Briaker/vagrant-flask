@@ -22,7 +22,10 @@ Vagrant.configure(2) do |config|
     end
 
     config.vm.provision "shell" do |s|
-       s.path = "www/provision/setup.sh"
+        s.path = "www/provision/setup.sh"
+
+    config.vm.provision :shell, run: "always", privileged: true, 
+        inline: "sudo service nginx restart"
 
        # Required arguments:
        #    arg1: root dir in the guest machine
